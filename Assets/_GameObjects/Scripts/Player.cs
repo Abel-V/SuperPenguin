@@ -41,6 +41,11 @@ public class Player : MonoBehaviour
 
     private Vector2 lastCheckPointPos;
 
+    private AudioSource audioSource;
+    public AudioClip jumpSound;
+    public AudioClip fireSound;
+    public AudioClip hurtSound;
+
 
     void Awake() //donde inicializamos NUESTROS componentes
         //y donde se recomienda obtener todas las referencias a otros objetos
@@ -49,6 +54,7 @@ public class Player : MonoBehaviour
         sr = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
         lastCheckPointPos = transform.position;
+        audioSource = GetComponent<AudioSource>();
     }
 
     //En START inicializamos componentes de OTROS elementos
@@ -125,9 +131,9 @@ public class Player : MonoBehaviour
             {
                 transform.rotation = Quaternion.Euler(Vector2.zero);
             }
-            else if (x < 0 || joystick.Horizontal < 0) 
+            else if (x < 0 || joystick.Horizontal < 0)
             {
-                transform.rotation = Quaternion.Euler(new Vector2(0,180));
+                transform.rotation = Quaternion.Euler(new Vector2(0, 180));
             }
             /*
             if (x < 0) {
@@ -148,6 +154,7 @@ public class Player : MonoBehaviour
         animator.SetBool(ANIM_JUMP, true);
         rb2d.velocity = new Vector2(rb2d.velocity.x + joystick.Horizontal * linearSpeed, jumpForce);
         state = State.Jumping;
+        audioSource.PlayOneShot(jumpSound);
     }
 
     /*
@@ -177,6 +184,7 @@ public class Player : MonoBehaviour
             proyectil.GetComponent<Rigidbody2D>().AddForce(spawnPoint.transform.right * force);
             //audioSource.PlayOneShot(acDisparo);
             Invoke("ActivarArma", cadencia); //puede volver a disparar una vez se ha pasado el tiempo de cadencia
+            audioSource.PlayOneShot(fireSound);
         }
     }
 
@@ -198,13 +206,13 @@ public class Player : MonoBehaviour
         {
             animator.SetBool(ANIM_SLIDING, false);
             sliding = false; //ahora ya puedo volver a moverme
-            print("HOLAAA111");
+            //print("HOLAAA111");
         }
-        print("TRIGGER:" + collision.gameObject.tag);
+        //print("TRIGGER:" + collision.gameObject.tag);
 
         //usar el collider de los pies para comparar si el objeto contra el que choca es un enemigo
         //y si es asi matarlo al saltar sobre el
-        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyPenguin")
+        if (collision.gameObject.tag == "Enemy")
         {
             //print("Toma!");
             int jumpDamage = 100; //muy alto para que mate a cualquier enemigo a la primera
@@ -266,9 +274,9 @@ public class Player : MonoBehaviour
         {
             animator.SetBool(ANIM_SLIDING, false);
             sliding = false; //ahora ya puedo volver a moverme
-            print("HOLAAA2222");
+            //print("HOLAAA2222");
         }
-        print("COLLISION:" + collision.gameObject.tag);
+        //print("COLLISION:" + collision.gameObject.tag);
 
         /*
         if (collision.gameObject.tag == "EnemyPenguin")
@@ -313,6 +321,7 @@ public class Player : MonoBehaviour
     {
         health = health - damage;
         sliderHealth.GetComponent<Slider>().value = health;
+        audioSource.PlayOneShot(hurtSound);
         if (health <= 0)
         {
             Die();

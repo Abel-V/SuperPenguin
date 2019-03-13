@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -9,14 +10,15 @@ public class Enemy : MonoBehaviour
     public int touchDamage = 25;
     [SerializeField] float force = 500;
 
-    virtual public void ReceiveDamage(int damage)
+    public void ReceiveDamage(int damage)
     {
-        print("AUU");
+        //print("AUU");
         health = health - damage;
         if (health <= 0)
         {
             Die();
         }
+        GetComponentInChildren<Slider>().value = health;
     }
 
     public void Die()

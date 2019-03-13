@@ -26,7 +26,6 @@ public class EnemyPenguin : Enemy
     private void Disparar() //CONVERTIR EN IENUMERATOR Y USAR WAITFORSECONDS PARA MAS REALISMO
     {
         animator.SetTrigger("Firing");
-        print("Firing!");
         GameObject bala = Instantiate(snowballPrefab, spawnPoint.position, spawnPoint.rotation);
         bala.GetComponent<Rigidbody2D>().AddForce(spawnPoint.transform.right * fuerzaDisparo);
 
@@ -51,16 +50,19 @@ public class EnemyPenguin : Enemy
         }
     }
     */
+
     private void Update()
     {
+        if (gameObject.transform.position.x < transformPlayer.position.x)
+        {
+            transform.rotation = Quaternion.Euler(Vector2.zero);
+        }
+        else if (gameObject.transform.position.x > transformPlayer.position.x)
+        {
+            transform.rotation = Quaternion.Euler(new Vector2(0, 180));
+        }
+
         ejeRotacion.LookAt(transformPlayer.position + new Vector3(0, 0.5f, 0)); //NO VA BIEN EN 2D
         ejeRotacion.Rotate(0, -90, 0); //CORRECCION
-        /*
-        if (estado == Estado.Attack)
-        {
-            //ejeRotacion.LookAt(transformPlayer.position+transformPlayer.up); //mira al Player (un metro más arriba, gracias al .up)
-            ejeRotacion.LookAt(transformPlayer.position + new Vector3(0, 0.5f, 0)); //mira al Player (un metro más arriba, gracias al .up)
-        }
-        */
     }
 }

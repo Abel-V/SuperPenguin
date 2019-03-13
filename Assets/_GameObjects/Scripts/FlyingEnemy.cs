@@ -28,9 +28,11 @@ public class FlyingEnemy : Enemy
 
     }
 
+    /* //lo he llevado a Enemy.cs
     override public void ReceiveDamage(int i)
     {
         base.ReceiveDamage(i);
         GetComponentInChildren<Slider>().value = health;
     }
+    */
 }

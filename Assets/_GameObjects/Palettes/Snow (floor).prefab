@@ -50,6 +50,24 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
+  - first: {x: 1, y: -1, z: 0}
+    second:
+      m_TileIndex: 10
+      m_TileSpriteIndex: 10
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_ObjectToInstantiate: {fileID: 0}
+      m_TileFlags: 1
+      m_ColliderType: 1
+  - first: {x: 3, y: -1, z: 0}
+    second:
+      m_TileIndex: 11
+      m_TileSpriteIndex: 10
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_ObjectToInstantiate: {fileID: 0}
+      m_TileFlags: 1
+      m_ColliderType: 1
   - first: {x: -4, y: 0, z: 0}
     second:
       m_TileIndex: 4
@@ -153,6 +171,10 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: db12af59826e688408ab301104202f3e, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: d850ccf7c74e7f541a1d72d219ec6b57, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: c982b340fafcff34ba5b52be64495ba6, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: bcbca33d36b4652429515805b4e646b9, type: 3}
@@ -174,8 +196,10 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: 5f864a0521258784f82ee46583f7b478, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 6da2f3f398f3e7940a8d2a885165e809, type: 3}
+  - m_RefCount: 2
+    m_Data: {fileID: 21300000, guid: 6be1fe22795e8544b8e7650084f22134, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 10
+  - m_RefCount: 12
     m_Data:
       e00: 1
       e01: 0
@@ -194,7 +218,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 10
+  - m_RefCount: 12
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -275,7 +299,7 @@ GameObject:
   - component: {fileID: 7985549707214044333}
   - component: {fileID: 2426844456783775254}
   m_Layer: 31
-  m_Name: ice plain
+  m_Name: Snow (floor)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
