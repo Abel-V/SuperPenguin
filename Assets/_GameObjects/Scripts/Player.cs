@@ -46,6 +46,10 @@ public class Player : MonoBehaviour
     public AudioClip fireSound;
     public AudioClip hurtSound;
 
+    [SerializeField] GameObject immuneParticlePrefab;
+    [SerializeField] bool immunity = false;
+    [SerializeField] int godMode;
+
 
     void Awake() //donde inicializamos NUESTROS componentes
         //y donde se recomienda obtener todas las referencias a otros objetos
@@ -55,6 +59,12 @@ public class Player : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         lastCheckPointPos = transform.position;
         audioSource = GetComponent<AudioSource>();
+
+        godMode = PlayerPrefs.GetInt("modoDios"); // 0 = true, 1 = false
+        if (godMode == 0)
+        {
+            immunity = true;
+        }
     }
 
     //En START inicializamos componentes de OTROS elementos
@@ -92,7 +102,7 @@ public class Player : MonoBehaviour
             rb2d.velocity = new Vector2(-linearSpeed * 3, rb2d.velocity.y);
         }
         //print("X:" + rb2d.velocity.x + "Y:" + rb2d.velocity.y);
-
+        //print(state);
     }
 
     private void FixedUpdate()
@@ -108,13 +118,20 @@ public class Player : MonoBehaviour
         if((Mathf.Abs(x) > 0 || Mathf.Abs(joystick.Horizontal) > 0) && sliding == false) {
             animator.SetBool(ANIM_WALK, true);
 
-            //DESCOMENTAR PARA TACTIL:
-            //rb2d.velocity = new Vector2(joystick.Horizontal * linearSpeed, rb2d.velocity.y); //que la Y sea la que tenga
+            //PARA TACTIL:
+            if(Mathf.Abs(joystick.Horizontal) > 0)
+            {
+                rb2d.velocity = new Vector2(joystick.Horizontal * linearSpeed, rb2d.velocity.y);
+            }
+            //que la Y sea la que tenga
             //otro modo (con AddForce):
             //rb2d.AddForce(new Vector2(joystick.Horizontal * linearSpeed, 0), ForceMode2D.Impulse);
 
-            //DESCOMENTAR PARA TECLAS:
-            rb2d.velocity = new Vector2(x * linearSpeed, rb2d.velocity.y);
+            //PARA TECLAS:
+            if (Mathf.Abs(x) > 0)
+            {
+                rb2d.velocity = new Vector2(x * linearSpeed, rb2d.velocity.y);
+            }
 
             /* VERSIÓN RETRO
             if (x < 0) {
@@ -206,7 +223,6 @@ public class Player : MonoBehaviour
         {
             animator.SetBool(ANIM_SLIDING, false);
             sliding = false; //ahora ya puedo volver a moverme
-            //print("HOLAAA111");
         }
         //print("TRIGGER:" + collision.gameObject.tag);
 
@@ -220,6 +236,13 @@ public class Player : MonoBehaviour
             //SetImpulse(700); //mejor hago una versión mas simple aquí:
             rb2d.AddForce(new Vector2(0, yForce*800));
             state = State.Jumping;
+        }
+        if(collision.gameObject.name == "Star")
+        {
+            state = State.Immune;
+            health = 100;
+            sliderHealth.GetComponent<Slider>().value = health;
+            StartCoroutine("Immunity");
         }
     }
 
@@ -319,12 +342,15 @@ public class Player : MonoBehaviour
 
     public void ReceiveDamage(int damage)
     {
-        health = health - damage;
-        sliderHealth.GetComponent<Slider>().value = health;
-        audioSource.PlayOneShot(hurtSound);
-        if (health <= 0)
+        if (!immunity)
         {
-            Die();
+            health = health - damage;
+            sliderHealth.GetComponent<Slider>().value = health;
+            audioSource.PlayOneShot(hurtSound);
+            if (health <= 0)
+            {
+                Die();
+            }
         }
     }
 
@@ -333,7 +359,10 @@ public class Player : MonoBehaviour
         int multiplier = sr.flipX ? 1 : -1; //está andando hacia atrás (true, 1), o hacia alante (false, -1)
         rb2d.AddForce(new Vector2(xForce * multiplier, yForce) * force);
         state = State.Jumping;
-        animator.SetTrigger("Hurt");
+        if (!immunity)
+        {
+            animator.SetTrigger("Hurt");
+        }
     }
 
     private void Die()
@@ -342,6 +371,18 @@ public class Player : MonoBehaviour
         transform.position = lastCheckPointPos;
         health = 100;
         sliderHealth.GetComponent<Slider>().value = health;
+    }
+
+    private IEnumerator Immunity()
+    {
+        immuneParticlePrefab.SetActive(true);
+        immunity = true;
+        yield return new WaitForSeconds(6);
+        immuneParticlePrefab.SetActive(false);
+        if (godMode == 1)
+        {
+            immunity = false;
+        }
     }
 
     public void SetCheckPointPosition(Vector2 newPos)

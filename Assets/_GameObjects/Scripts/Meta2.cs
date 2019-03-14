@@ -8,8 +8,15 @@ public class Meta2 : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("heeeey");
+        StoreConfiguration();
         gameFinishedPanel.SetActive(true);
         Time.timeScale = 0;
+    }
+
+    private void StoreConfiguration()
+    {
+        PlayerPrefs.SetInt("punt2", GameManager.Points);
+        GameManager.Points = 0; //para que se reinicien en la siguiente escena
+        PlayerPrefs.Save();
     }
 }

@@ -110,4 +110,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectSound: {fileID: 0}
-  prefabEffect: {fileID: 0}
+  prefabEffect: {fileID: 2689233749295228494, guid: e1ea2dab8e60fd14f8532cf79ececd26,
+    type: 3}

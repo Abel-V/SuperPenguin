@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+
     public AudioClip collectSound;
     public GameObject prefabEffect;
 
-    
     public virtual void DoAction()
     {
 
@@ -22,10 +22,14 @@ public class Item : MonoBehaviour
 
     public virtual void Kill()
     {
+        PlaySound();
         if (prefabEffect != null) {
             RunEffect();
         }
     }
 
-    public void PlaySound() { }
+    public void PlaySound()
+    {
+
+    }
 }
