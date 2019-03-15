@@ -101,6 +101,13 @@ public class Player : MonoBehaviour
         {
             rb2d.velocity = new Vector2(-linearSpeed * 3, rb2d.velocity.y);
         }
+
+        //para que no acelere muchisimo en caida libre:
+
+        else if (rb2d.velocity.y < -linearSpeed * 5)
+        {
+            rb2d.velocity = new Vector2(rb2d.velocity.x, -linearSpeed * 5);
+        }
         //print("X:" + rb2d.velocity.x + "Y:" + rb2d.velocity.y);
         //print(state);
     }

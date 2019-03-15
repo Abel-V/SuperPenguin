@@ -24,9 +24,12 @@ public class Snowball : MonoBehaviour
         }
         else
         {
-            spriteSnowball.SetActive(false);
-            spriteCrashed.SetActive(true);
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            if (collision.gameObject.tag != "EnemySnowball" && collision.gameObject.tag != "Snowball")
+            {
+                spriteSnowball.SetActive(false);
+                spriteCrashed.SetActive(true);
+                rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            }
         }
     }
 

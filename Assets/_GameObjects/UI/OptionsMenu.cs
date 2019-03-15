@@ -25,7 +25,7 @@ public class OptionsMenu : MonoBehaviour
         if (PlayerPrefs.HasKey(PPK_VOLUMEN)) {
             volumen = PlayerPrefs.GetInt(PPK_VOLUMEN);
         }*/
-        modoDios = PlayerPrefs.GetInt(PPK_GOD_MODE, 0);
+        modoDios = PlayerPrefs.GetInt(PPK_GOD_MODE, 1); //segunda posicion: valor por defecto. (1 es false)
         //sliderSonido.value = volumen;
         modoDiosToggle.isOn = modoDios == 0 ? true : false;
 

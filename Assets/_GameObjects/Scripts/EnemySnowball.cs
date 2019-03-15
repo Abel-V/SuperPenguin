@@ -9,10 +9,6 @@ public class EnemySnowball : MonoBehaviour
     public GameObject spriteCrashed;
     public Rigidbody2D rb;
 
-    private void Start()
-    {
-        Invoke("AutoDestroy", 2.8f);
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -21,13 +17,17 @@ public class EnemySnowball : MonoBehaviour
             //print("BOLA");
             collision.gameObject.GetComponent<Player>().ReceiveDamage(damage);
             collision.gameObject.GetComponent<Player>().SetImpulse(200);
-            Destroy(this.gameObject);
+            AutoDestroy();
         }
         else
         {
-            spriteSnowball.SetActive(false);
-            spriteCrashed.SetActive(true);
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            if (collision.gameObject.tag != "EnemySnowball" && collision.gameObject.tag != "Snowball")
+            {
+                spriteSnowball.SetActive(false);
+                spriteCrashed.SetActive(true);
+                rb.constraints = RigidbodyConstraints2D.FreezeAll;
+                Invoke("AutoDestroy", 0.5f);
+            }
         }
     }
 
