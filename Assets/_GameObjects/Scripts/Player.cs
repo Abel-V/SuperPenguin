@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] GameObject immuneParticlePrefab;
     [SerializeField] bool immunity = false;
-    [SerializeField] int godMode;
+    //[SerializeField] int godMode;
 
 
     void Awake() //donde inicializamos NUESTROS componentes
@@ -60,11 +60,12 @@ public class Player : MonoBehaviour
         lastCheckPointPos = transform.position;
         audioSource = GetComponent<AudioSource>();
 
+        /*
         godMode = PlayerPrefs.GetInt("modoDios"); // 0 = true, 1 = false
         if (godMode == 0)
         {
             immunity = true;
-        }
+        }*/
     }
 
     //En START inicializamos componentes de OTROS elementos
@@ -87,7 +88,7 @@ public class Player : MonoBehaviour
             //hacer que cargue disparo y lo suelte con getkeyUp -> no funciona con el tactil
             CargarDisparo();
         }*/
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        else if (Input.GetKeyUp(KeyCode.W))
         {
             StartCoroutine("Disparar");
         }
@@ -386,10 +387,10 @@ public class Player : MonoBehaviour
         immunity = true;
         yield return new WaitForSeconds(6);
         immuneParticlePrefab.SetActive(false);
-        if (godMode == 1)
+        /*if (godMode == 1)
         {
             immunity = false;
-        }
+        }*/
     }
 
     public void SetCheckPointPosition(Vector2 newPos)

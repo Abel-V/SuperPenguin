@@ -6,10 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class OptionsMenu : MonoBehaviour
 {
-    public Toggle modoDiosToggle;
+    //public Toggle modoDiosToggle;
     //public Slider sliderSonido;
     //private const string PPK_VOLUMEN = "volumen";
-    private const string PPK_GOD_MODE = "modoDios";
+    //private const string PPK_GOD_MODE = "modoDios";
 
     private int maxPunt1;
     private int maxPunt2;
@@ -25,9 +25,9 @@ public class OptionsMenu : MonoBehaviour
         if (PlayerPrefs.HasKey(PPK_VOLUMEN)) {
             volumen = PlayerPrefs.GetInt(PPK_VOLUMEN);
         }*/
-        modoDios = PlayerPrefs.GetInt(PPK_GOD_MODE, 1); //segunda posicion: valor por defecto. (1 es false)
+       // modoDios = PlayerPrefs.GetInt(PPK_GOD_MODE, 1); //segunda posicion: valor por defecto. (1 es false)
         //sliderSonido.value = volumen;
-        modoDiosToggle.isOn = modoDios == 0 ? true : false;
+        //modoDiosToggle.isOn = modoDios == 0 ? true : false;
 
         maxPunt1 = PlayerPrefs.GetInt("maxPunt1", 0);
         maxPunt2 = PlayerPrefs.GetInt("maxPunt2", 0);
@@ -45,8 +45,8 @@ public class OptionsMenu : MonoBehaviour
         //print(modoDiosToggle.isOn);
         //print(sliderSonido.value.ToString());
 
-        int modoDios = modoDiosToggle.isOn ? 0 : 1;
-        PlayerPrefs.SetInt(PPK_GOD_MODE, modoDios);
+        //int modoDios = modoDiosToggle.isOn ? 0 : 1;
+        //PlayerPrefs.SetInt(PPK_GOD_MODE, modoDios);
         //PlayerPrefs.SetInt(PPK_VOLUMEN, (int)sliderSonido.value);
         PlayerPrefs.Save();
     }
